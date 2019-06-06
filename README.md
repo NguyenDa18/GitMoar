@@ -1,2 +1,0 @@
-# GitMoar
-Created with CodeSandbox
