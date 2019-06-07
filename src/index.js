@@ -10,6 +10,8 @@ import Search from "./components/users/Search";
 import Alert from "./components/layout/Alert";
 import "./styles.css";
 
+import GithubState from "./context/github/GithubState";
+
 const GITHUB_API = "https://api.github.com";
 
 const App = () => {
@@ -19,12 +21,12 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
-  const searchUsers = async text => {
-    setLoading(true);
-    const res = await axios.get(`${GITHUB_API}/search/users?q=${text}`);
-    setUsers(res.data.items);
-    setLoading(false);
-  };
+  // const searchUsers = async text => {
+  //   setLoading(true);
+  //   const res = await axios.get(`${GITHUB_API}/search/users?q=${text}`);
+  //   setUsers(res.data.items);
+  //   setLoading(false);
+  // };
 
   const clearUsers = () => {
     setUsers([]);
@@ -57,9 +59,10 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <GithubState>
+      {/** Wrap App in Provider given by GithubState */}
       <Router>
-        <Fragment>
+        <div className="App">
           <Navbar title="GitMoar" />
           <div className="container">
             <Alert alert={alert} />
@@ -70,7 +73,6 @@ const App = () => {
                 render={props => (
                   <Fragment>
                     <Search
-                      searchUsers={searchUsers}
                       clearUsers={clearUsers}
                       showClear={users.length > 0 ? true : false}
                       setAlert={showAlert}
@@ -96,9 +98,9 @@ const App = () => {
               />
             </Switch>
           </div>
-        </Fragment>
+        </div>
       </Router>
-    </div>
+    </GithubState>
   );
 };
 
