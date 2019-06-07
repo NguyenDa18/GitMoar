@@ -28,7 +28,7 @@ const GithubState = props => {
     const res = await axios.get(`${GITHUB_API}/search/users?q=${text}`);
     dispatch({
       type: SEARCH_USERS,
-      payload: res.data
+      payload: res.data.items
     });
   };
 
